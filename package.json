@@ -1,0 +1,23 @@
+{
+  "name": "react-irl",
+  "version": "1.0.0",
+  "description": "Bleh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greysonp/react-irl.git"
+  },
+  "author": "",
+  "license": "The Unlicense",
+  "bugs": {
+    "url": "https://github.com/greysonp/react-irl/issues"
+  },
+  "homepage": "https://github.com/greysonp/react-irl#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socketio": "^1.0.0"
+  }
+}
