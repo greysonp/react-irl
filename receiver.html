@@ -42,6 +42,10 @@
     <script>
       var socket = io();
 
+      document.getElementsByTagName('body')[0].onclick = function() {
+        requestFullscreen(document.getElementsByTagName('body')[0]);
+      }
+
       socket.on('receive_reaction', function(msg){
         console.log(msg);
 
@@ -79,6 +83,18 @@
           socket.emit('image_loaded', {});
         }
       });
+
+      function requestFullscreen(element) {
+        if (element.requestFullscreen) {
+        	element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+        	element.webkitRequestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+        	element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+        	element.msRequestFullscreen();
+        }
+      }
     </script>
   </body>
 </html>
