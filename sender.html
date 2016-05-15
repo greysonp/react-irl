@@ -63,6 +63,10 @@
     <script>
       var socket = io();
 
+      socket.on('image_loaded', function(msg){
+        alert('Image loaded.');
+      });
+
       document.getElementById('query').onkeypress = function(e) {
         // If they press 'Enter'
         if (e.keyCode == 13) {

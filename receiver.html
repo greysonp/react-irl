@@ -76,6 +76,7 @@
         // Hide the loading spinner when it finishes loading
         imageElement.onload = function() {
           document.getElementById('loading-cover').style.visibility = 'hidden';
+          socket.emit('image_loaded', {});
         }
       });
     </script>

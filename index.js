@@ -17,8 +17,13 @@ io.on('connection', function(socket){
   console.log('a user connected');
 
   socket.on('send_reaction', function(msg){
-    console.log('received send');
+    console.log('received send_reaction');
     socket.broadcast.emit('receive_reaction', msg);
+  });
+
+  socket.on('image_loaded', function(msg){
+    console.log('received image_loaded');
+    socket.broadcast.emit('image_loaded', msg);
   });
 });
 
