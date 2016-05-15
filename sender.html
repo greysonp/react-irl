@@ -2,23 +2,44 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Sender - React IRL</title>
     <script src="/socket.io/socket.io.js"></script>
 
+    <style media="screen">
+      body, html {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+
+      img {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+      }
+    </style>
+
   </head>
-  <body id="body">
-    SENDER
+  <body>
 
     <input type="textbox" id="query" value="Search" />
     <input type="button" id="button2" onclick=searchGiphy() value="Search" />
-
+    <div id="container"></div>
     <script>
       var socket = io();
-    
-      function sockit(url) {
-        console.log(url);
+
+      function sockit(url, width, height) {
+        console.log({
+          url: url,
+          width: width,
+          height: height
+        });
         socket.emit('send_reaction', {
-          url: url
+          url: url,
+          width: width,
+          height: height
         });
       }
       function searchGiphy() {
@@ -35,7 +56,16 @@
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText).data;
             data.forEach(function(image) {
-              document.getElementById("body").innerHTML += '<span onclick=sockit("'+image.images.original.url+'")><center><img src = "'+image.images.original.url+'"  title="GIF via Giphy"/></center></span>';
+              var original = image.images.original;
+              console.log(original);
+
+              var imgElement = document.createElement('img');
+              imgElement.src = original.url;
+              imgElement.onclick = function() {
+                sockit(original.url, original.width, original.height);
+              }
+
+              document.getElementById('container').appendChild(imgElement);
             });
           } else {
             console.log('reached giphy, but API returned an error');

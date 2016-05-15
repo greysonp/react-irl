@@ -30,27 +30,23 @@
       var socket = io();
 
       socket.on('receive_reaction', function(msg){
-        console.log('received');
-        var image = new Image();
-        image.src = msg.url;
-        image.onload = function() {
+        console.log(msg);
 
-          // Try scaling the image so the width fills the width of the window.
-          var scaledWidth = window.innerWidth;
-          var scaledHeight = this.height * (window.innerWidth / this.width)
+        // Try scaling the image so the width fills the width of the window.
+        var scaledWidth = window.innerWidth;
+        var scaledHeight = msg.height * (window.innerWidth / msg.width)
 
-          // If it overflows the height, then switch and scale the width instead
-          if (scaledHeight > window.innerHeight) {
-            scaledHeight = window.innerHeight;
-            scaledWidth = this.width * (window.innerHeight / this.height);
-          }
-
-          // Set properties on element
-          var imageElement = document.getElementById('image');
-          imageElement.src = msg.url;
-          imageElement.width = scaledWidth;
-          imageElement.height = scaledHeight;
+        // If it overflows the height, then switch and scale the width instead
+        if (scaledHeight > window.innerHeight) {
+          scaledHeight = window.innerHeight;
+          scaledWidth = msg.width * (window.innerHeight / msg.height);
         }
+
+        // Set properties on element
+        var imageElement = document.getElementById('image');
+        imageElement.src = msg.url;
+        imageElement.width = scaledWidth;
+        imageElement.height = scaledHeight;
       });
     </script>
   </body>
