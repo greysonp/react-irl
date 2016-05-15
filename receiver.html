@@ -18,10 +18,19 @@
         vertical-align: middle;
         text-align: center;
       }
+
+      #loading-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     </style>
 
   </head>
   <body>
+    <img id="loading-cover" src="/loading.gif" />
     <table>
       <tr><td><img id="image" /></td></tr>
     </table>
@@ -31,6 +40,9 @@
 
       socket.on('receive_reaction', function(msg){
         console.log(msg);
+
+        // Show the loading spinner
+        document.getElementById('loading-cover').style.visibility = 'visible';
 
         // Try scaling the image so the width fills the width of the window.
         var scaledWidth = window.innerWidth;
@@ -47,6 +59,11 @@
         imageElement.src = msg.url;
         imageElement.width = scaledWidth;
         imageElement.height = scaledHeight;
+
+        // Hide the loading spinner when it finishes loading
+        imageElement.onload = function() {
+          document.getElementById('loading-cover').style.visibility = 'hidden';
+        }
       });
     </script>
   </body>
