@@ -129,8 +129,8 @@
 
               var imgElement = document.createElement('img');
               imgElement.src = original.url;
-              imgElement.style.width = (window.innerWidth / 2 - 10) + 'px';
-              imgElement.style.height = (window.innerWidth / 2 - 10) + 'px';
+              imgElement.style.width = window.innerWidth / 2 + 'px';
+              imgElement.style.height = window.innerWidth / 2 + 'px';
               imgElement.onclick = function() {
                 emitImage(original.url, original.width, original.height, false);
               }
