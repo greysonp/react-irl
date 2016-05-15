@@ -28,12 +28,34 @@
         font-size: 24px;
         padding: 15px;
       }
+
+      #emoji {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+
+      #emoji img {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        overflow-x: auto;
+        text-align: left;
+      }
     </style>
 
   </head>
   <body>
 
     <input type="textbox" id="query" value="Search" />
+    <div id="emoji">
+      <img src="smiling.svg" />
+      <img src="laughing.svg" />
+      <img src="winking.svg" />
+      <img src="love.svg" />
+      <img src="crying.svg" />
+      <img src="angry.svg" />
+      <img src="poop.svg" />
+    </div>
     <div id="container"></div>
     <script>
       var socket = io();
@@ -45,11 +67,22 @@
         }
       }
 
-      function sockit(url, width, height) {
+      var images = document.getElementById('emoji').getElementsByTagName('img');
+      console.log(images);
+      for (var i = 0; i < images.length; i++) {
+        (function(img) {
+          img.onclick = function() {
+            emitImage(img.src, img.width, img.height, true);
+          }
+        })(images[i]);
+      };
+
+      function emitImage(url, width, height, isLocal) {
         var msg = {
           url: url,
           width: width,
-          height: height
+          height: height,
+          isLocal: isLocal
         };
         console.log(msg);
         socket.emit('send_reaction', msg);
@@ -97,7 +130,7 @@
               imgElement.style.width = window.innerWidth / 2 + 'px';
               imgElement.style.height = window.innerWidth / 2 + 'px';
               imgElement.onclick = function() {
-                sockit(original.url, original.width, original.height);
+                emitImage(original.url, original.width, original.height, false);
               }
 
               document.getElementById('container').appendChild(imgElement);

@@ -45,6 +45,15 @@
       socket.on('receive_reaction', function(msg){
         console.log(msg);
 
+        if (msg.isLocal) {
+          var img = document.getElementById('image');
+          img.src = msg.url;
+          img.style.height = '75%';
+          img.style.width = 'auto';
+          document.getElementById('loading-cover').style.visibility = 'hidden';
+          return;
+        }
+
         // Show the loading spinner
         document.getElementById('loading-cover').style.visibility = 'visible';
 
