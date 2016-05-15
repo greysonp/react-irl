@@ -70,8 +70,8 @@
         // Set properties on element
         var imageElement = document.getElementById('image');
         imageElement.src = msg.url;
-        imageElement.style.width = scaledWidth;
-        imageElement.style.height = scaledHeight;
+        imageElement.style.width = scaledWidth + 'px';
+        imageElement.style.height = scaledHeight + 'px';
 
         // Hide the loading spinner when it finishes loading
         imageElement.onload = function() {
