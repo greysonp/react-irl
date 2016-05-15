@@ -55,7 +55,28 @@
         request.onload = function() {
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText).data;
-            data.forEach(function(image) {
+
+            // get 5 unique random gifs from response
+            var randomNumbers = [];
+            while(randomNumbers.length < 5){
+              var randomNumber=Math.ceil(Math.random()*(data.length-1))
+              var found=false;
+              for(var i=0;i<randomNumbers.length;i++){
+                if(randomNumbers[i]==randomNumber){ 
+                  found=true;
+                  break
+                }
+              }
+              if(!found) {
+                randomNumbers[randomNumbers.length]=randomNumber;
+              }
+            }
+
+            var newData = [];
+            randomNumbers.forEach(function(number) {
+              newData.push(data[number]);
+            });
+            newData.forEach(function(image) {
               var original = image.images.original;
               console.log(original);
 
