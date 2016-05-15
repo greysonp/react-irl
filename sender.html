@@ -44,6 +44,10 @@
       }
       function searchGiphy() {
         // remove all spans
+        var container = document.getElementById('container');
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
         var elements = document.getElementsByTagName('span');
         while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
 
