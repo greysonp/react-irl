@@ -12,12 +12,21 @@
         width: 100%;
         height: 100%;
         text-align: center;
+        padding: 0;
+        margin: 0;
       }
 
       img {
         display: inline-block;
+        object-fit: cover;
+        margin: 0;
+        padding: 0;
+      }
+
+      #query {
         width: 100%;
-        height: auto;
+        font-size: 24px;
+        padding: 15px;
       }
     </style>
 
@@ -25,45 +34,44 @@
   <body>
 
     <input type="textbox" id="query" value="Search" />
-    <input type="button" id="button2" onclick=searchGiphy() value="Search" />
     <div id="container"></div>
     <script>
       var socket = io();
 
-      function sockit(url, width, height) {
-        console.log({
-          url: url,
-          width: width,
-          height: height
-        });
-        socket.emit('send_reaction', {
-          url: url,
-          width: width,
-          height: height
-        });
+      document.getElementById('query').onkeypress = function(e) {
+        // If they press 'Enter'
+        if (e.keyCode == 13) {
+          searchGiphy();
+        }
       }
+
+      function sockit(url, width, height) {
+        var msg = {
+          url: url,
+          width: width,
+          height: height
+        };
+        console.log(msg);
+        socket.emit('send_reaction', msg);
+      }
+
       function searchGiphy() {
         // remove all spans
-        var container = document.getElementById('container');
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-        var elements = document.getElementsByTagName('span');
-        while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+        emptyContainer(document.getElementById('container'));
 
-        q = document.getElementById("query").value; // search query
 
+        var q = document.getElementById("query").value; // search query
         request = new XMLHttpRequest;
-        request.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&q='+q, true);
+        request.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&q=' + q, true);
 
         request.onload = function() {
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText).data;
 
-            // get 5 unique random gifs from response
+            // get unique random gifs from response
             var randomNumbers = [];
-            while (randomNumbers.length < 5) {
-              var randomNumber = Math.ceil(Math.random() * (data.length-1))
+            while (randomNumbers.length < Math.min(data.length, 8)) {
+              var randomNumber = Math.ceil(Math.random() * (data.length - 1))
               var found = false;
               for (var i = 0; i < randomNumbers.length; i++){
                 if (randomNumbers[i] == randomNumber){
@@ -86,6 +94,8 @@
 
               var imgElement = document.createElement('img');
               imgElement.src = original.url;
+              imgElement.style.width = window.innerWidth / 2 + 'px';
+              imgElement.style.height = window.innerWidth / 2 + 'px';
               imgElement.onclick = function() {
                 sockit(original.url, original.width, original.height);
               }
@@ -102,6 +112,13 @@
         };
 
         request.send();
+      }
+
+      function emptyContainer(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+        while (element.firstChild) element.removeChild(element.firstChild);
       }
 
     </script>
