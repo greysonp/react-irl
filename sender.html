@@ -62,17 +62,17 @@
 
             // get 5 unique random gifs from response
             var randomNumbers = [];
-            while(randomNumbers.length < 5){
-              var randomNumber=Math.ceil(Math.random()*(data.length-1))
-              var found=false;
-              for(var i=0;i<randomNumbers.length;i++){
-                if(randomNumbers[i]==randomNumber){ 
-                  found=true;
+            while (randomNumbers.length < 5) {
+              var randomNumber = Math.ceil(Math.random() * (data.length-1))
+              var found = false;
+              for (var i = 0; i < randomNumbers.length; i++){
+                if (randomNumbers[i] == randomNumber){
+                  found = true;
                   break
                 }
               }
               if(!found) {
-                randomNumbers[randomNumbers.length]=randomNumber;
+                randomNumbers[randomNumbers.length] = randomNumber;
               }
             }
 
