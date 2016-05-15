@@ -32,21 +32,22 @@
       #emoji {
         border-bottom: 1px solid #ddd;
         padding: 10px 0;
+        overflow-x: scroll;
+        text-align: left;
+        white-space: nowrap;
       }
 
       #emoji img {
         display: inline-block;
         width: 60px;
         height: 60px;
-        overflow-x: auto;
-        text-align: left;
       }
     </style>
 
   </head>
   <body>
 
-    <input type="textbox" id="query" value="Search" />
+    <input type="textbox" id="query" placeholder="Search..." />
     <div id="emoji">
       <img src="smiling.svg" />
       <img src="laughing.svg" />
@@ -127,8 +128,8 @@
 
               var imgElement = document.createElement('img');
               imgElement.src = original.url;
-              imgElement.style.width = window.innerWidth / 2 + 'px';
-              imgElement.style.height = window.innerWidth / 2 + 'px';
+              imgElement.style.width = (window.innerWidth / 2 - 10) + 'px';
+              imgElement.style.height = (window.innerWidth / 2 - 10) + 'px';
               imgElement.onclick = function() {
                 emitImage(original.url, original.width, original.height, false);
               }
