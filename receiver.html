@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Receiver - React IRL</title>
+    <script src="/socket.io/socket.io.js"></script>
+
+  </head>
+  <body>
+    RECEIVER
+
+    <img id="image" width="500" height="500" />
+
+    <script>
+      var socket = io();
+
+      socket.on('receive_reaction', function(msg){
+        console.log('received');
+        document.getElementById('image').src = msg.url;
+      });
+    </script>
+  </body>
+</html>

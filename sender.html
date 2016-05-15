@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sender - React IRL</title>
+    <script src="/socket.io/socket.io.js"></script>
+
+  </head>
+  <body>
+    SENDER
+
+    <input type="button" id="button" value="click me" />
+
+    <script>
+      var socket = io();
+
+      document.getElementById('button').onclick = function() {
+        socket.emit('send_reaction', {
+          url: 'https://media.giphy.com/media/l396Sk7di8nRuPMbK/giphy.gif'
+        });
+      }
+    </script>
+  </body>
+</html>

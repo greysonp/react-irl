@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/greysonp/react-irl#readme",
   "dependencies": {
-    "express": "^4.13.4",
-    "socketio": "^1.0.0"
+    "express": "^4.10.2",
+    "socket.io": "^1.4.6"
   }
 }
