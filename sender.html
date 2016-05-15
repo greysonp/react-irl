@@ -12,12 +12,13 @@
     <input type="textbox" id="query" value="Search" />
     <input type="button" id="button2" onclick=searchGiphy() value="Search" />
 
-    <script> 
+    <script>
+      var socket = io();
+    
       function sockit(url) {
-        var socket = io();
         console.log(url);
         socket.emit('send_reaction', {
-          url: url 
+          url: url
         });
       }
       function searchGiphy() {
@@ -26,10 +27,10 @@
         while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
 
         q = document.getElementById("query").value; // search query
-        
+
         request = new XMLHttpRequest;
         request.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&q='+q, true);
-        
+
         request.onload = function() {
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText).data;
