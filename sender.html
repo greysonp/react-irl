@@ -6,19 +6,48 @@
     <script src="/socket.io/socket.io.js"></script>
 
   </head>
-  <body>
+  <body id="body">
     SENDER
 
-    <input type="button" id="button" value="click me" />
+    <input type="textbox" id="query" value="Search" />
+    <input type="button" id="button2" onclick=searchGiphy() value="Search" />
 
-    <script>
-      var socket = io();
-
-      document.getElementById('button').onclick = function() {
+    <script> 
+      function sockit(url) {
+        var socket = io();
+        console.log(url);
         socket.emit('send_reaction', {
-          url: 'https://media.giphy.com/media/l396Sk7di8nRuPMbK/giphy.gif'
+          url: url 
         });
       }
+      function searchGiphy() {
+        // remove all spans
+        var elements = document.getElementsByTagName('span');
+        while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+
+        q = document.getElementById("query").value; // search query
+        
+        request = new XMLHttpRequest;
+        request.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&q='+q, true);
+        
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400){
+            data = JSON.parse(request.responseText).data;
+            data.forEach(function(image) {
+              document.getElementById("body").innerHTML += '<span onclick=sockit("'+image.images.original.url+'")><center><img src = "'+image.images.original.url+'"  title="GIF via Giphy"/></center></span>';
+            });
+          } else {
+            console.log('reached giphy, but API returned an error');
+           }
+        };
+
+        request.onerror = function() {
+          console.log('connection error');
+        };
+
+        request.send();
+      }
+
     </script>
   </body>
 </html>
